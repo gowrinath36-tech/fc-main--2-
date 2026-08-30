@@ -356,23 +356,20 @@ window.addEventListener(
 
       requestAnimationFrame(() => {
 
-
         // HERO
         revealHero();
-
 
         // SOIL TO SIP
         initSoilToSip();
 
-
+        // PERSON BEHIND FOREST
+        if (typeof initPersonBehindForest === "function") {
+          initPersonBehindForest();
+        }
 
         // Refresh GSAP
-        if (
-          typeof ScrollTrigger !== "undefined"
-        ) {
-
+        if (typeof ScrollTrigger !== "undefined") {
           ScrollTrigger.refresh();
-
         }
 
       });
@@ -449,367 +446,377 @@ function initSoilToSip() {
   if (!section) return;
 
 
-  const line = document.querySelector("#sts-line-active");
-  const dot = document.querySelector("#sts-moving-dot");
-
-  const cards = gsap.utils.toArray(".sts-card");
+  const isMobile = window.innerWidth <= 900;
 
 
-  if (!line || !dot || !cards.length) return;
+  if (isMobile) {
 
+    // On mobile, show cards normally in single vertical flow
 
-  /* ==========================================
-     SVG PATH SETUP
-     ========================================== */
+    const cards = document.querySelectorAll(".sts-stage-card");
 
-  const pathLength = line.getTotalLength();
+    cards.forEach((c) => {
 
-  line.style.strokeDasharray = pathLength;
-  line.style.strokeDashoffset = pathLength;
+      c.classList.add("active");
 
+      c.style.opacity = "1";
 
-  /* ==========================================
-     CARD INITIAL STATE
-     ========================================== */
+      c.style.transform = "none";
 
-  cards.forEach((card, index) => {
-
-    gsap.set(card, {
-      opacity: 0,
-      y: 120,
-      scale: 0.92,
-      rotation: parseFloat(
-        getComputedStyle(card)
-          .getPropertyValue("--card-angle")
-      ) || 0
     });
 
-  });
-
-
-  /* ==========================================
-     CARD STACK SETTINGS
-     ========================================== */
-
-  const stackPositions = [
-
-    {
-      x: -28,
-      y: 20,
-      scale: 0.86,
-      rotation: -7
-    },
-
-    {
-      x: 20,
-      y: 12,
-      scale: 0.88,
-      rotation: 6
-    },
-
-    {
-      x: -15,
-      y: 8,
-      scale: 0.90,
-      rotation: -4
-    },
-
-    {
-      x: 18,
-      y: 4,
-      scale: 0.92,
-      rotation: 8
-    },
-
-    {
-      x: -12,
-      y: 0,
-      scale: 0.94,
-      rotation: -6
-    },
-
-    {
-      x: 10,
-      y: -4,
-      scale: 0.95,
-      rotation: 5
-    },
-
-    {
-      x: -8,
-      y: -7,
-      scale: 0.96,
-      rotation: -8
-    },
-
-    {
-      x: 7,
-      y: -10,
-      scale: 0.97,
-      rotation: 4
-    },
-
-    {
-      x: -4,
-      y: -13,
-      scale: 0.985,
-      rotation: -5
-    },
-
-    {
-      x: 0,
-      y: -16,
-      scale: 1,
-      rotation: 7
-    }
-
-  ];
-
-
-  /* ==========================================
-     UPDATE CARD STACK
-     ========================================== */
-
-  function updateCards(progress) {
-
-    const total = cards.length;
-
-    /*
-      Progress:
-      0 → 1
-
-      Each card gets its own portion
-      of the scroll.
-    */
-
-    cards.forEach((card, index) => {
-
-      const cardStart = index / total;
-
-      const cardEnd = (index + 1) / total;
-
-      let localProgress =
-        (progress - cardStart) /
-        (cardEnd - cardStart);
-
-      localProgress = gsap.utils.clamp(
-        0,
-        1,
-        localProgress
-      );
-
-
-      /*
-        Before card enters
-      */
-
-      if (progress < cardStart) {
-
-        gsap.set(card, {
-          opacity: 0,
-          y: 120,
-          scale: 0.88,
-          rotation: stackPositions[index].rotation
-        });
-
-        return;
-      }
-
-
-      /*
-        Card enters
-      */
-
-      const position =
-        stackPositions[index];
-
-
-      /*
-        Falling / sliding movement
-      */
-
-      const eased =
-        gsap.parseEase("power3.out")(
-          localProgress
-        );
-
-
-      const y =
-        gsap.utils.interpolate(
-          120,
-          position.y,
-          eased
-        );
-
-
-      const scale =
-        gsap.utils.interpolate(
-          0.88,
-          position.scale,
-          eased
-        );
-
-
-      /*
-        Slight rotation movement
-      */
-
-      const rotation =
-        gsap.utils.interpolate(
-          position.rotation - 8,
-          position.rotation,
-          eased
-        );
-
-
-      /*
-        Old cards stay visible
-      */
-
-      gsap.set(card, {
-
-        opacity: 1,
-
-        x: position.x,
-
-        y: y,
-
-        scale: scale,
-
-        rotation: rotation
-
-      });
-
-    });
+    return;
 
   }
 
 
-  /* ==========================================
-     SCROLLTRIGGER
-     ========================================== */
+  // Desktop scroll-driven path tracking animation with GSAP Pinning
 
-  const trigger = ScrollTrigger.create({
+  const maskPath = document.querySelector("#sts-mask-path");
+
+  const bean = document.querySelector("#sts-bean-tracker");
+
+  const beanBody = document.querySelector("#bean-body");
+
+  const beanCrevice = document.querySelector("#bean-crevice");
+
+  const trackIcons = document.querySelectorAll(".sts-track-icon-item");
+
+  const stageCards = document.querySelectorAll(".sts-stage-card");
+
+  const cupRipple = document.querySelector("#cup-ripple");
+
+
+  if (!maskPath || !bean) return;
+
+
+  const pathLength = maskPath.getTotalLength();
+
+  maskPath.style.strokeDasharray = pathLength;
+
+  maskPath.style.strokeDashoffset = pathLength;
+
+
+  // Milestone target progress values for 5 stages (Sprout -> Cherry -> Roast -> Grind -> Cup)
+
+  const stageProgressMap = [0.12, 0.35, 0.58, 0.80, 0.96];
+
+
+  // Isolate timeline completely via GSAP Pinning
+
+  ScrollTrigger.create({
 
     trigger: section,
 
     start: "top top",
 
-    end: "bottom bottom",
+    end: "+=280%",
 
-    scrub: true,
+    pin: true,
 
-    onUpdate: self => {
+    scrub: 0.5,
 
-      const progress = self.progress;
+    anticipatePin: 1,
 
+    invalidateOnRefresh: true,
 
-      /* ======================================
-         DRAW CURVED LINE
-         ====================================== */
+    onUpdate: (self) => {
 
-      const currentLength =
-        pathLength * progress;
-
-      line.style.strokeDashoffset =
-        pathLength - currentLength;
+      const progress = self.progress; // strictly 0.0 (top of section) to 1.0 (end of pinned scroll)
 
 
-      /* ======================================
-         MOVE DOT ALONG SVG PATH
-         ====================================== */
+      // 1. Draw active path stroke via mask offset
 
-      const point =
-        line.getPointAtLength(
-          pathLength * progress
-        );
+      maskPath.style.strokeDashoffset = pathLength - progress * pathLength;
 
 
-      /*
-        SVG coordinates → CSS coordinates
-      */
+      // 2. Position tracker icon along the path
 
-      const svg =
-        document.querySelector(
-          ".sts-line-svg"
-        );
+      const point = maskPath.getPointAtLength(progress * pathLength);
 
 
-      const svgRect =
-        svg.getBoundingClientRect();
+      const svg = document.querySelector(".sts-track-svg");
+
+      if (!svg) return;
+
+      const svgRect = svg.getBoundingClientRect();
+
+      const viewBox = svg.viewBox.baseVal;
 
 
-      const viewBox =
-        svg.viewBox.baseVal;
+      const x = (point.x / viewBox.width) * svgRect.width;
+
+      const y = (point.y / viewBox.height) * svgRect.height;
 
 
-      const x =
-        (point.x / viewBox.width) *
-        svgRect.width;
+      // Rotational rolling effect as it moves down (4 full rotations)
+
+      const rotation = progress * 1440;
+
+      bean.style.left = `${x}px`;
+
+      bean.style.top = `${y}px`;
 
 
-      const y =
-        (point.y / viewBox.height) *
-        svgRect.height;
+      // 3. Dynamic Color Transition:
+
+      // 0% – 30%: Raw Green (#6b8e23)
+
+      // 30% – 60%: Ripe Red Cherry (#c0392b)
+
+      // 60% – 90%: Rich Roasted Brown (#4a2c11 to #2c1810)
+
+      // 90% – 100%: Dropping into cup (#2c1810)
+
+      let fillColor = "#6b8e23";
+
+      let creviceColor = "#3e5314";
+
+      let glowColor = "rgba(107, 142, 35, 0.8)";
 
 
-      dot.style.left =
-        `${x}px`;
+      if (progress < 0.30) {
 
-      dot.style.top =
-        `${y}px`;
+        // Raw Green bean
+
+        fillColor = "#6b8e23";
+
+        creviceColor = "#3e5314";
+
+        glowColor = "rgba(107, 142, 35, 0.8)";
+
+      } else if (progress < 0.60) {
+
+        // Green -> Red interpolation (0.30 to 0.60)
+
+        const t = (progress - 0.30) / 0.30;
+
+        const r = Math.round(107 + (192 - 107) * t);
+
+        const g = Math.round(142 + (57 - 142) * t);
+
+        const b = Math.round(35 + (43 - 35) * t);
+
+        fillColor = `rgb(${r}, ${g}, ${b})`;
+
+        creviceColor = `rgb(${Math.round(62 + (120 - 62) * t)}, ${Math.round(83 + (30 - 83) * t)}, 20)`;
+
+        glowColor = "rgba(192, 57, 43, 0.8)";
+
+      } else if (progress < 0.90) {
+
+        // Red -> Rich Roasted Brown interpolation (0.60 to 0.90)
+
+        const t = (progress - 0.60) / 0.30;
+
+        const r = Math.round(192 + (44 - 192) * t);
+
+        const g = Math.round(57 + (24 - 57) * t);
+
+        const b = Math.round(43 + (16 - 43) * t);
+
+        fillColor = `rgb(${r}, ${g}, ${b})`;
+
+        creviceColor = `rgb(${Math.round(120 + (21 - 120) * t)}, ${Math.round(30 + (11 - 30) * t)}, ${Math.round(20 + (6 - 20) * t)})`;
+
+        glowColor = "rgba(212, 163, 115, 0.8)";
+
+      } else {
+
+        // Final Roasted Brown bean
+
+        fillColor = "#2c1810";
+
+        creviceColor = "#150b06";
+
+        glowColor = "rgba(212, 163, 115, 0.9)";
+
+      }
 
 
-      /* ======================================
-         UPDATE CARDS
-         ====================================== */
+      if (beanBody) beanBody.setAttribute("fill", fillColor);
 
-      updateCards(progress);
+      if (beanCrevice) beanCrevice.setAttribute("stroke", creviceColor);
+
+      bean.style.filter = `drop-shadow(0 0 10px ${glowColor})`;
+
+
+      // Bean Scale & Drop-In at bottom into the cup
+
+      if (progress >= 0.94) {
+
+        const dropT = (progress - 0.94) / 0.06; // 0 to 1
+
+        const beanScale = Math.max(0.4, 1.12 - dropT * 0.65);
+
+        bean.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(${beanScale})`;
+
+        bean.style.opacity = (1 - dropT * 0.4).toString();
+
+
+        // Animate Cup Crema Ripple
+
+        if (cupRipple) {
+
+          cupRipple.setAttribute("r", (2 + dropT * 18).toString());
+
+          cupRipple.setAttribute("opacity", ((1 - dropT) * 0.9).toString());
+
+        }
+
+      } else {
+
+        bean.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(1.12)`;
+
+        bean.style.opacity = "1";
+
+        if (cupRipple) cupRipple.setAttribute("opacity", "0");
+
+      }
+
+
+      // 4. Milestone Icon Proximity & Strict Disappearance Rules
+
+      trackIcons.forEach((icon, i) => {
+
+        const targetP = stageProgressMap[i];
+
+        const dist = Math.abs(progress - targetP);
+
+
+        if (dist < 0.08) {
+
+          // When bean is right next to milestone, smoothly fade in and scale up
+
+          const ratio = 1 - dist / 0.08;
+
+          icon.style.opacity = (ratio * 1).toFixed(3);
+
+          icon.style.transform = `translate(-50%, -50%) scale(${0.85 + 0.33 * ratio})`;
+
+          icon.classList.add("active-icon");
+
+        } else {
+
+          // Completely disappeared when bean is not at this milestone
+
+          icon.style.opacity = "0";
+
+          icon.style.transform = "translate(-50%, -50%) scale(0.85)";
+
+          icon.classList.remove("active-icon");
+
+        }
+
+      });
+
+
+      // 5. Active Stage Card Selection with Proximity Crossfade (Only active card visible)
+
+      let activeIndex = 0;
+
+      if (progress >= 0.88) {
+
+        activeIndex = 4;
+
+      } else if (progress >= 0.69) {
+
+        activeIndex = 3;
+
+      } else if (progress >= 0.46) {
+
+        activeIndex = 2;
+
+      } else if (progress >= 0.23) {
+
+        activeIndex = 1;
+
+      } else {
+
+        activeIndex = 0;
+
+      }
+
+
+      stageCards.forEach((card, idx) => {
+
+        if (idx === activeIndex) {
+
+          const dist = Math.abs(progress - stageProgressMap[idx]);
+
+          if (dist < 0.14) {
+
+            const ratio = Math.min(1, (1 - dist / 0.14) * 1.5);
+
+            card.classList.add("active");
+
+            card.style.opacity = Math.max(0.2, ratio).toString();
+
+            card.style.transform = `translateY(${16 * (1 - ratio)}px) scale(${0.96 + 0.04 * ratio})`;
+
+            card.style.pointerEvents = "auto";
+
+          } else {
+
+            card.classList.remove("active");
+
+            card.style.opacity = "0";
+
+            card.style.transform = "translateY(24px) scale(0.96)";
+
+            card.style.pointerEvents = "none";
+
+          }
+
+        } else {
+
+          card.classList.remove("active");
+
+          card.style.opacity = "0";
+
+          card.style.transform = "translateY(24px) scale(0.96)";
+
+          card.style.pointerEvents = "none";
+
+        }
+
+      });
+
+
+      // 6. Background color transition easing into Little Farmer section (#1c1410 -> #1b271d)
+
+      if (progress > 0.78) {
+
+        const blendFactor = (progress - 0.78) / 0.22;
+
+        const r = Math.round(28 - (28 - 27) * blendFactor);
+
+        const g = Math.round(20 + (39 - 20) * blendFactor);
+
+        const b = Math.round(16 + (29 - 16) * blendFactor);
+
+        section.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+
+      } else {
+
+        section.style.backgroundColor = "#1c1410";
+
+      }
 
     }
 
   });
 
 
-  /* ==========================================
-     INITIAL POSITION
-     ========================================== */
+  window.addEventListener("resize", () => {
 
-  updateCards(0);
+    ScrollTrigger.refresh();
 
-
-  /* ==========================================
-     REFRESH
-     ========================================== */
-
-  window.addEventListener(
-    "resize",
-    () => {
-
-      ScrollTrigger.refresh();
-
-    }
-  );
+  });
 
 }
 
 
-/* ============================================
-   INIT
-   ============================================ */
-
-if (document.readyState === "loading") {
-
-  document.addEventListener(
-    "DOMContentLoaded",
-    initSoilToSip
-  );
-
-} else {
-
-  initSoilToSip();
-
-}
 
  
 // ---- TINY COT PATH JOURNEY — MotionPathPlugin ----
@@ -1072,21 +1079,133 @@ function initPersonBehindForest() {
 }
 
 
-// ============================================
-// START PERSON SECTION
-// ============================================
-
-window.addEventListener("DOMContentLoaded", () => {
-
-  // Small delay so all sections are ready
-  requestAnimationFrame(() => {
-
-    initPersonBehindForest();
-
-  });
-
-});
  
+/* ============================================
+   LITTLE FARMER — SCROLL REVEAL
+   ============================================ */
+
+(function () {
+
+  const lfRevealEls = document.querySelectorAll("#little-farmer .lf-reveal");
+
+  if (lfRevealEls.length === 0) return;
+
+  const lfObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("lf-visible");
+          lfObserver.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      root: null,
+      threshold: 0.2,
+      rootMargin: "0px 0px -60px 0px",
+    }
+  );
+
+  lfRevealEls.forEach((el) => lfObserver.observe(el));
+
+})();
+
+
+/* ============================================
+   AMBIENCE & MOMENTS SCROLL REVEAL
+   ============================================ */
+
+(function () {
+  const ambienceCards = document.querySelectorAll(".ambience-card");
+  if (ambienceCards.length === 0) return;
+
+  if (typeof IntersectionObserver !== "undefined") {
+    const ambObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+            ambObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    ambienceCards.forEach((c, idx) => {
+      c.style.opacity = "0";
+      c.style.transform = "translateY(30px)";
+      c.style.transition = `opacity 0.6s ease ${idx * 0.12}s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${idx * 0.12}s`;
+      ambObserver.observe(c);
+    });
+  }
+})();
+
+/* ============================================
+   SOCIAL PROOF & VISIT US SCROLL REVEAL
+   ============================================ */
+
+(function () {
+  const visitCols = document.querySelectorAll(".visit-reviews-col, .visit-connect-col");
+  if (visitCols.length === 0) return;
+
+  if (typeof IntersectionObserver !== "undefined") {
+    const visitObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+            visitObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    visitCols.forEach((col, idx) => {
+      col.style.opacity = "0";
+      col.style.transform = "translateY(25px)";
+      col.style.transition = `opacity 0.6s ease ${idx * 0.15}s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${idx * 0.15}s`;
+      visitObserver.observe(col);
+    });
+  }
+})();
+
+/* ============================================
+   NAV SCROLLSPY & SMOOTH SCROLL
+   ============================================ */
+
+(function () {
+  const navLinks = document.querySelectorAll(".nav-links a");
+  const sections = document.querySelectorAll("section[id]");
+
+  if (!navLinks.length || !sections.length) return;
+
+  function updateActiveNav() {
+    const scrollY = window.pageYOffset;
+
+    sections.forEach((sec) => {
+      const secTop = sec.offsetTop - 150;
+      const secHeight = sec.offsetHeight;
+      const id = sec.getAttribute("id");
+
+      if (scrollY >= secTop && scrollY < secTop + secHeight) {
+        navLinks.forEach((link) => {
+          if (link.getAttribute("href") === `#${id}`) {
+            link.classList.add("active");
+          } else {
+            link.classList.remove("active");
+          }
+        });
+      }
+    });
+  }
+
+  window.addEventListener("scroll", updateActiveNav, { passive: true });
+})();
+
 /* ============================================
    GLOBAL RESPONSIVE REFRESH
    ============================================ */

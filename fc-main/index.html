@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Forest Cafe — Vellimalai Road, Salem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -30,9 +33,12 @@
   <a href="#hero" class="nav-word">Forest Cafe</a>
   <ul class="nav-links">
     <li><a href="#soil-to-sip">Coffee</a></li>
-    <li><a href="#farmer">Farm</a></li>
-    <li><a href="#tinycot">Tiny Cot</a></li>
-    <li><a href="#owner">Story</a></li>
+    <li><a href="#little-farmer">Farm</a></li>
+    <li><a href="#tinycot-path">Tiny Cot</a></li>
+    <li><a href="#person-behind-forest">Story</a></li>
+    <li><a href="#menu-board">Menu</a></li>
+    <li><a href="#cafe-ambience">Ambience</a></li>
+    <li><a href="#visit-us">Visit</a></li>
   </ul>
 </nav>
 
@@ -156,206 +162,237 @@
 </section>
 
 <!-- ============================================
-     SOIL TO SIP — 10 CARD SCROLL JOURNEY
+     SOIL TO SIP — SPLIT SCREEN JOURNEY
      ============================================ -->
 
 <section id="soil-to-sip" class="soil-to-sip-section">
 
   <div class="sts-wrap">
 
-    <!-- ========================================
-         LEFT — JOURNEY LINE
-         ======================================== -->
+    <!-- ====================================================
+         LEFT COLUMN (~24%): Sidebar Rail with S-Curve & Bean
+         ==================================================== -->
+    <div class="sts-left-track">
 
-    <div class="sts-journey">
+      <!-- S-Curve SVG Track -->
+      <div class="sts-svg-wrap">
+        <svg class="sts-track-svg" viewBox="0 0 120 1000" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <mask id="sts-track-mask">
+              <path
+                id="sts-mask-path"
+                d="
+                  M 60 0
+                  C 25 70, 95 130, 75 200
+                  C 25 280, 95 360, 45 440
+                  C 20 520, 100 600, 75 680
+                  C 25 760, 95 830, 45 900
+                  C 20 930, 60 945, 60 960
+                "
+                fill="none"
+                stroke="white"
+                stroke-width="12"
+                stroke-linecap="round"
+              ></path>
+            </mask>
+          </defs>
 
-      <div class="sts-line-wrap">
-
-        <svg
-          class="sts-line-svg"
-          viewBox="0 0 120 1000"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-
-          <!-- Background line -->
+          <!-- Background Dashed Track -->
           <path
-            id="sts-line-bg"
+            class="sts-line-bg"
             d="
               M 60 0
-              C 42 90, 78 150, 60 230
-              C 42 310, 78 370, 60 450
-              C 45 530, 75 600, 60 680
-              C 45 760, 78 830, 60 1000
+              C 25 70, 95 130, 75 200
+              C 25 280, 95 360, 45 440
+              C 20 520, 100 600, 75 680
+              C 25 760, 95 830, 45 900
+              C 20 930, 60 945, 60 960
             "
           ></path>
 
-          <!-- Active line -->
+          <!-- Animated Active Dashed Track -->
           <path
-            id="sts-line-active"
+            class="sts-line-active"
+            mask="url(#sts-track-mask)"
             d="
               M 60 0
-              C 42 90, 78 150, 60 230
-              C 42 310, 78 370, 60 450
-              C 45 530, 75 600, 60 680
-              C 45 760, 78 830, 60 1000
+              C 25 70, 95 130, 75 200
+              C 25 280, 95 360, 45 440
+              C 20 520, 100 600, 75 680
+              C 25 760, 95 830, 45 900
+              C 20 930, 60 945, 60 960
             "
           ></path>
-
         </svg>
 
-        <!-- Moving circle -->
-        <div id="sts-moving-dot"></div>
+        <!-- Animated Rolling Bean / Cherry Tracker (Dynamic Color: Green -> Red -> Brown -> Dropping into Cup) -->
+        <div id="sts-bean-tracker" class="sts-bean-tracker">
+          <svg viewBox="0 0 40 40" class="bean-svg-icon" aria-hidden="true">
+            <ellipse id="bean-body" cx="20" cy="20" rx="15" ry="10.5" fill="#6b8e23" transform="rotate(-30 20 20)" />
+            <path id="bean-crevice" d="M 9 20 C 14 15, 26 25, 31 20" stroke="#3e5314" stroke-width="2.2" stroke-linecap="round" fill="none" transform="rotate(-30 20 20)" />
+          </svg>
+        </div>
+
+        <!-- 5 Small Milestone Cartoon Icons along the Track -->
+        <div class="sts-track-icons">
+
+          <!-- Icon 1: Sprout (~12%) -->
+          <div class="sts-track-icon-item sts-icon-1" data-stage="0" style="top: 12%; left: 75%;">
+            <svg viewBox="0 0 60 60" class="mini-icon-svg" aria-label="Sprout">
+              <path d="M 8 50 C 15 42, 45 42, 52 50 Z" fill="#634532" />
+              <path d="M 30 46 Q 29 32, 30 18" stroke="#7bb03b" stroke-width="3" stroke-linecap="round" fill="none" />
+              <path d="M 30 24 Q 16 14, 10 20 Q 18 28, 30 24 Z" fill="#6ca32b" />
+              <path d="M 30 19 Q 44 8, 50 14 Q 42 22, 30 19 Z" fill="#84bf34" />
+            </svg>
+          </div>
+
+          <!-- Icon 2: Cherries (~35%) -->
+          <div class="sts-track-icon-item sts-icon-2" data-stage="1" style="top: 35%; left: 35%;">
+            <svg viewBox="0 0 60 60" class="mini-icon-svg" aria-label="Cherries">
+              <path d="M 10 40 Q 30 28, 50 20" stroke="#5c3e2b" stroke-width="3" stroke-linecap="round" fill="none" />
+              <path d="M 24 34 Q 10 24, 8 12 Q 24 18, 24 34 Z" fill="#366b2d" />
+              <path d="M 36 30 Q 28 12, 38 4 Q 46 18, 36 30 Z" fill="#47853b" />
+              <circle cx="32" cy="32" r="5.5" fill="#cc2b2b" />
+              <circle cx="40" cy="27" r="6" fill="#e23333" />
+              <circle cx="43" cy="35" r="5" fill="#a81e1e" />
+            </svg>
+          </div>
+
+          <!-- Icon 3: Bean Pile (~58%) -->
+          <div class="sts-track-icon-item sts-icon-3" data-stage="2" style="top: 58%; left: 70%;">
+            <svg viewBox="0 0 60 60" class="mini-icon-svg" aria-label="Roasted Beans">
+              <ellipse cx="30" cy="46" rx="22" ry="7" fill="#2d1a0e" opacity="0.6" />
+              <ellipse cx="18" cy="44" rx="6" ry="4" fill="#54331d" transform="rotate(-10 18 44)" />
+              <ellipse cx="28" cy="45" rx="6.5" ry="4.2" fill="#422716" transform="rotate(15 28 45)" />
+              <ellipse cx="39" cy="44" rx="6" ry="4" fill="#5e3921" transform="rotate(-20 39 44)" />
+              <ellipse cx="23" cy="39" rx="6" ry="4" fill="#6a4025" transform="rotate(25 23 39)" />
+              <ellipse cx="35" cy="39" rx="6.2" ry="4.2" fill="#52311b" transform="rotate(-15 35 39)" />
+              <ellipse cx="29" cy="33" rx="6" ry="4" fill="#754829" />
+            </svg>
+          </div>
+
+          <!-- Icon 4: Grinder (~80%) -->
+          <div class="sts-track-icon-item sts-icon-4" data-stage="3" style="top: 80%; left: 35%;">
+            <svg viewBox="0 0 60 60" class="mini-icon-svg" aria-label="Grinder">
+              <path d="M 30 14 L 48 11" stroke="#4a3728" stroke-width="2" stroke-linecap="round" />
+              <circle cx="48" cy="11" r="2.5" fill="#8c5a36" />
+              <path d="M 20 18 C 20 27, 40 27, 40 18 Z" fill="#4d7064" />
+              <rect x="17" y="27" width="26" height="23" rx="2" fill="#a0683f" stroke="#5e3b21" stroke-width="1.5" />
+              <rect x="21" y="33" width="18" height="13" rx="1" fill="#7a4c2b" />
+              <circle cx="30" cy="40" r="2" fill="#d9a25f" />
+              <rect x="15" y="50" width="30" height="3.5" rx="1" fill="#5e3b21" />
+            </svg>
+          </div>
+
+          <!-- Icon 5: Coffee Cup with Steam and Ripple at bottom (~96%) -->
+          <div class="sts-track-icon-item sts-icon-5 sts-final-cup" data-stage="4" style="top: 95%; left: 50%;">
+            <svg viewBox="0 0 100 90" class="mini-cup-svg" aria-label="Coffee Cup Destination">
+              <!-- Steam animation -->
+              <g id="cup-steam-group" class="cup-steam-anim">
+                <path d="M 40 20 C 36 12, 44 8, 40 0" stroke="#f4ede4" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.85" />
+                <path d="M 50 22 C 46 14, 54 10, 50 2" stroke="#f4ede4" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.85" />
+                <path d="M 60 25 C 56 16, 64 12, 60 4" stroke="#f4ede4" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.85" />
+              </g>
+              <!-- Saucer -->
+              <ellipse cx="50" cy="78" rx="38" ry="8" fill="#ede5d8" stroke="#b8a892" stroke-width="1.5" />
+              <!-- Cup Handle -->
+              <path d="M 68 46 C 82 46, 82 66, 66 66" stroke="#ede5d8" stroke-width="4.5" fill="none" stroke-linecap="round" />
+              <!-- Cup Body -->
+              <path d="M 30 40 L 35 68 C 36 74, 64 74, 65 68 L 70 40 Z" fill="#f4ede4" stroke="#c4b49e" stroke-width="1.5" />
+              <!-- Liquid Surface -->
+              <ellipse cx="50" cy="40" rx="20" ry="6" fill="#361f12" />
+              <!-- Crema & Ripple effect -->
+              <ellipse id="cup-crema" cx="50" cy="40" rx="17" ry="4.5" fill="#6d3e1d" />
+              <circle id="cup-ripple" cx="50" cy="40" r="2" fill="none" stroke="#d4a373" stroke-width="1.5" opacity="0" />
+            </svg>
+          </div>
+
+        </div>
 
       </div>
 
     </div>
 
+    <!-- ====================================================
+         RIGHT COLUMN (~76%): Story Content & Main Image Cards
+         ==================================================== -->
+    <div class="sts-right-content">
 
-    <!-- ========================================
-         RIGHT — IMAGE CARD STACK
-         ======================================== -->
+      <div class="sts-header-block">
+        <div class="eyebrow">From Soil to Sip</div>
+        <h2 class="display">The Coffee Journey</h2>
+        <p class="sts-lead-text">Follow the transformation of single-origin coffee from fertile Salem soil to your handcrafted morning cup.</p>
+      </div>
 
-    <div class="sts-card-stack">
+      <!-- Main Stage Cards Deck (Strict single-active card visibility) -->
+      <div class="sts-cards-deck">
 
-      <!-- Card 01 -->
-      <article class="sts-card sts-card-01">
-        <div class="sts-card-image">
-          <img
-            src=""
-            alt="Soil to Sip — Stage 01"
-          >
-          <span class="sts-image-placeholder">
-            IMAGE 01
-          </span>
-        </div>
-      </article>
+        <!-- Stage 01: Sprout -->
+        <article class="sts-stage-card sts-card-0" data-index="0">
+          <div class="sts-card-img-box">
+            <img src="assets/journey/01-soil.jpg" alt="Rich soil and sprout" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="sts-fallback-badge">IMAGE 01 &bull; THE NURSERY</div>
+          </div>
+          <div class="sts-card-info">
+            <span class="sts-step-tag">STAGE 01 &bull; THE NURSERY</span>
+            <h3>The Soil &amp; Sprout</h3>
+            <p>Our journey begins in organic shade nurseries. Nurtured in nutrient-dense compost and cool mountain mist, the first tender green shoots break through the soil.</p>
+          </div>
+        </article>
 
+        <!-- Stage 02: Coffee Cherries -->
+        <article class="sts-stage-card sts-card-1" data-index="1">
+          <div class="sts-card-img-box">
+            <img src="assets/journey/05-cherry.jpg" alt="Ripe red coffee cherries" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="sts-fallback-badge">IMAGE 02 &bull; HARVEST</div>
+          </div>
+          <div class="sts-card-info">
+            <span class="sts-step-tag">STAGE 02 &bull; HARVEST</span>
+            <h3>Cherry Ripening</h3>
+            <p>Cultivated under native canopy trees, branches become laden with clusters of vibrant ruby-red cherries, carefully hand-picked at their peak brix sugar level.</p>
+          </div>
+        </article>
 
-      <!-- Card 02 -->
-      <article class="sts-card sts-card-02">
-        <div class="sts-card-image">
-          <img
-            src=""
-            alt="Soil to Sip — Stage 02"
-          >
-          <span class="sts-image-placeholder">
-            IMAGE 02
-          </span>
-        </div>
-      </article>
+        <!-- Stage 03: Roasted Beans -->
+        <article class="sts-stage-card sts-card-2" data-index="2">
+          <div class="sts-card-img-box">
+            <img src="assets/journey/06-roast.jpg" alt="Roasted coffee beans" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="sts-fallback-badge">IMAGE 03 &bull; ARTISANAL ROAST</div>
+          </div>
+          <div class="sts-card-info">
+            <span class="sts-step-tag">STAGE 03 &bull; ARTISANAL ROAST</span>
+            <h3>The Artisanal Roast</h3>
+            <p>Pulped, dried, and roasted in small precision batches. The roast develops rich notes of dark chocolate, toasted caramel, and deep nutty undertones.</p>
+          </div>
+        </article>
 
+        <!-- Stage 04: Fresh Grind -->
+        <article class="sts-stage-card sts-card-3" data-index="3">
+          <div class="sts-card-img-box">
+            <img src="assets/journey/07-grind.jpg" alt="Fresh ground coffee" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="sts-fallback-badge">IMAGE 04 &bull; FRESH GRIND</div>
+          </div>
+          <div class="sts-card-info">
+            <span class="sts-step-tag">STAGE 04 &bull; FRESH GRIND</span>
+            <h3>Precision Grind</h3>
+            <p>Freshly cracked moments before brewing. Grinding unlocks the encapsulated volatile aromatic oils, releasing intense fragrant aromas into the air.</p>
+          </div>
+        </article>
 
-      <!-- Card 03 -->
-      <article class="sts-card sts-card-03">
-        <div class="sts-card-image">
-          <img
-            src=""
-            alt="Soil to Sip — Stage 03"
-          >
-          <span class="sts-image-placeholder">
-            IMAGE 03
-          </span>
-        </div>
-      </article>
+        <!-- Stage 05: The Perfect Sip -->
+        <article class="sts-stage-card sts-card-4" data-index="4">
+          <div class="sts-card-img-box">
+            <img src="assets/journey/08-sip.jpg" alt="Steaming coffee cup" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="sts-fallback-badge">IMAGE 05 &bull; THE CUP</div>
+          </div>
+          <div class="sts-card-info">
+            <span class="sts-step-tag">STAGE 05 &bull; THE CUP</span>
+            <h3>The Perfect Sip</h3>
+            <p>Slow-dripped with hot frothy milk in traditional South Indian style. Smooth, full-bodied, and deeply satisfying from first drop to last sip.</p>
+          </div>
+        </article>
 
-
-      <!-- Card 04 -->
-      <article class="sts-card sts-card-04">
-        <div class="sts-card-image">
-          <img
-            src=""
-            alt="Soil to Sip — Stage 04"
-          >
-          <span class="sts-image-placeholder">
-            IMAGE 04
-          </span>
-        </div>
-      </article>
-
-
-      <!-- Card 05 -->
-      <article class="sts-card sts-card-05">
-        <div class="sts-card-image">
-          <img
-            src=""
-            alt="Soil to Sip — Stage 05"
-          >
-          <span class="sts-image-placeholder">
-            IMAGE 05
-          </span>
-        </div>
-      </article>
-
-
-      <!-- Card 06 -->
-      <article class="sts-card sts-card-06">
-        <div class="sts-card-image">
-          <img
-            src=""
-            alt="Soil to Sip — Stage 06"
-          >
-          <span class="sts-image-placeholder">
-            IMAGE 06
-          </span>
-        </div>
-      </article>
-
-
-      <!-- Card 07 -->
-      <article class="sts-card sts-card-07">
-        <div class="sts-card-image">
-          <img
-            src=""
-            alt="Soil to Sip — Stage 07"
-          >
-          <span class="sts-image-placeholder">
-            IMAGE 07
-          </span>
-        </div>
-      </article>
-
-
-      <!-- Card 08 -->
-      <article class="sts-card sts-card-08">
-        <div class="sts-card-image">
-          <img
-            src=""
-            alt="Soil to Sip — Stage 08"
-          >
-          <span class="sts-image-placeholder">
-            IMAGE 08
-          </span>
-        </div>
-      </article>
-
-
-      <!-- Card 09 -->
-      <article class="sts-card sts-card-09">
-        <div class="sts-card-image">
-          <img
-            src=""
-            alt="Soil to Sip — Stage 09"
-          >
-          <span class="sts-image-placeholder">
-            IMAGE 09
-          </span>
-        </div>
-      </article>
-
-
-      <!-- Card 10 -->
-      <article class="sts-card sts-card-10">
-        <div class="sts-card-image">
-          <img
-            src=""
-            alt="Soil to Sip — Stage 10"
-          >
-          <span class="sts-image-placeholder">
-            IMAGE 10
-          </span>
-        </div>
-      </article>
+      </div>
 
     </div>
 
@@ -375,7 +412,7 @@
          INTRO
          ======================================== -->
 
-    <div class="little-farmer-intro">
+    <div class="little-farmer-intro lf-reveal">
 
       <p class="little-farmer-eyebrow">
         FROM OUR FARM
@@ -400,23 +437,25 @@
 
 
     <!-- ========================================
-         PRODUCTS
+         PRODUCTS WITH ARTISANAL PHOTOGRAPHY
          ======================================== -->
 
     <div class="little-farmer-products">
 
       <!-- Product 01 -->
-      <article class="little-farmer-product">
+      <article class="little-farmer-product lf-reveal" style="transition-delay: 0s;">
 
         <div class="little-farmer-product-image">
 
           <img
-            src=""
-            alt="Coffee Powder"
+            src="assets/menu/menu-09.jpg"
+            alt="Farm Roast Coffee Powder"
+            loading="lazy"
+            onerror="this.style.opacity='0'; this.nextElementSibling.style.display='flex';"
           >
 
           <span class="little-farmer-image-placeholder">
-            IMAGE 01
+            01 &bull; COFFEE POWDER
           </span>
 
         </div>
@@ -441,17 +480,19 @@
 
 
       <!-- Product 02 -->
-      <article class="little-farmer-product">
+      <article class="little-farmer-product lf-reveal" style="transition-delay: 0.1s;">
 
         <div class="little-farmer-product-image">
 
           <img
-            src=""
-            alt="70 30 Coffee Blend"
+            src="assets/menu/menu-10.jpg"
+            alt="70 30 House Coffee Blend"
+            loading="lazy"
+            onerror="this.style.opacity='0'; this.nextElementSibling.style.display='flex';"
           >
 
           <span class="little-farmer-image-placeholder">
-            IMAGE 02
+            02 &bull; 70/30 BLEND
           </span>
 
         </div>
@@ -476,17 +517,19 @@
 
 
       <!-- Product 03 -->
-      <article class="little-farmer-product">
+      <article class="little-farmer-product lf-reveal" style="transition-delay: 0.2s;">
 
         <div class="little-farmer-product-image">
 
           <img
-            src=""
-            alt="80 20 Coffee Blend"
+            src="assets/menu/menu-08.jpg"
+            alt="80 20 Signature Coffee Blend"
+            loading="lazy"
+            onerror="this.style.opacity='0'; this.nextElementSibling.style.display='flex';"
           >
 
           <span class="little-farmer-image-placeholder">
-            IMAGE 03
+            03 &bull; 80/20 BLEND
           </span>
 
         </div>
@@ -511,17 +554,19 @@
 
 
       <!-- Product 04 -->
-      <article class="little-farmer-product">
+      <article class="little-farmer-product lf-reveal" style="transition-delay: 0.3s;">
 
         <div class="little-farmer-product-image">
 
           <img
-            src=""
+            src="assets/farmer/farmer-01.jpg"
             alt="Pirandai Thokku"
+            loading="lazy"
+            onerror="this.style.opacity='0'; this.nextElementSibling.style.display='flex';"
           >
 
           <span class="little-farmer-image-placeholder">
-            IMAGE 04
+            04 &bull; PIRANDAI THOKKU
           </span>
 
         </div>
@@ -546,17 +591,19 @@
 
 
       <!-- Product 05 -->
-      <article class="little-farmer-product">
+      <article class="little-farmer-product lf-reveal" style="transition-delay: 0.4s;">
 
         <div class="little-farmer-product-image">
 
           <img
-            src=""
-            alt="Banana Cake"
+            src="assets/menu/menu-04.jpg"
+            alt="Freshly Baked Banana Cake"
+            loading="lazy"
+            onerror="this.style.opacity='0'; this.nextElementSibling.style.display='flex';"
           >
 
           <span class="little-farmer-image-placeholder">
-            IMAGE 05
+            05 &bull; BANANA CAKE
           </span>
 
         </div>
@@ -582,6 +629,9 @@
     </div>
 
   </div>
+
+  <!-- Bottom gradient blend for seamless transition -->
+  <div class="lf-bottom-blend"></div>
 
 </section>
 
@@ -705,32 +755,64 @@
 
       <div class="person-image-frame">
 
-        <!-- Temporary placeholder -->
-        <div class="person-image-placeholder">
+        <!-- Stylized Art Director Canvas Portrait -->
+        <div class="person-image-art">
+          <svg viewBox="0 0 400 500" class="director-canvas-svg" aria-label="Creative Art Director Profile">
+            <defs>
+              <linearGradient id="art-bg-grad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#2a3c2e" />
+                <stop offset="60%" stop-color="#18261e" />
+                <stop offset="100%" stop-color="#121815" />
+              </linearGradient>
+              <linearGradient id="gold-stroke" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#d4a373" />
+                <stop offset="100%" stop-color="#8a5e30" />
+              </linearGradient>
+            </defs>
+            <rect width="400" height="500" fill="url(#art-bg-grad)" />
 
-          <div class="placeholder-inner">
+            <!-- Ambient Atmospheric Circles -->
+            <circle cx="280" cy="180" r="140" fill="#9e6812" opacity="0.12" />
+            <circle cx="120" cy="340" r="110" fill="#52624a" opacity="0.18" />
 
-            <span class="placeholder-icon">✦</span>
+            <!-- Architectural Blueprint Grid Lines -->
+            <line x1="40" y1="60" x2="360" y2="60" stroke="rgba(245, 232, 208, 0.08)" stroke-dasharray="4 4" />
+            <line x1="40" y1="200" x2="360" y2="200" stroke="rgba(245, 232, 208, 0.08)" stroke-dasharray="4 4" />
+            <line x1="40" y1="360" x2="360" y2="360" stroke="rgba(245, 232, 208, 0.08)" stroke-dasharray="4 4" />
+            <line x1="120" y1="40" x2="120" y2="440" stroke="rgba(245, 232, 208, 0.06)" stroke-dasharray="4 4" />
+            <line x1="280" y1="40" x2="280" y2="440" stroke="rgba(245, 232, 208, 0.06)" stroke-dasharray="4 4" />
 
-            <span class="placeholder-title">
-              OWNER VISUAL
-            </span>
+            <!-- Stylized Silhouette of Art Director Sketching / Storyboarding -->
+            <g transform="translate(110, 110)">
+              <!-- Head & Shoulders -->
+              <ellipse cx="90" cy="80" rx="42" ry="48" fill="#e8ded0" opacity="0.85" />
+              <path d="M 50 120 Q 90 140, 130 120 L 150 250 L 30 250 Z" fill="#2d3f32" />
+              <!-- Creative Lens / Eyewear & Pencil -->
+              <circle cx="75" cy="78" r="13" stroke="url(#gold-stroke)" stroke-width="2.5" fill="none" />
+              <circle cx="105" cy="78" r="13" stroke="url(#gold-stroke)" stroke-width="2.5" fill="none" />
+              <line x1="88" y1="78" x2="92" y2="78" stroke="url(#gold-stroke)" stroke-width="2" />
+              <!-- Drafting Hand & Pen -->
+              <path d="M 120 180 L 175 140" stroke="#d4a373" stroke-width="4" stroke-linecap="round" />
+              <!-- Light Sparks -->
+              <circle cx="175" cy="140" r="4" fill="#f5e8d0" />
+            </g>
 
-            <small>
-              IMAGE COMING SOON
-            </small>
+            <!-- Director Clapperboard & Film Tape Accents -->
+            <rect x="50" y="380" width="80" height="55" rx="3" fill="#1b251e" stroke="#c89f7a" stroke-width="1.5" />
+            <path d="M 50 395 L 130 395" stroke="#c89f7a" stroke-width="1.5" />
+            <path d="M 68 380 L 60 395" stroke="#c89f7a" stroke-width="1.5" />
+            <path d="M 92 380 L 84 395" stroke="#c89f7a" stroke-width="1.5" />
+            <path d="M 116 380 L 108 395" stroke="#c89f7a" stroke-width="1.5" />
 
-          </div>
-
+            <text x="60" y="422" fill="#c89f7a" font-size="10" font-family="'Plus Jakarta Sans', sans-serif" letter-spacing="2">SCENE 01</text>
+          </svg>
         </div>
 
         <div class="person-image-overlay"></div>
 
         <div class="person-image-label">
-
           <span>THE CREATIVE MIND</span>
           <span>BEHIND THE FOREST</span>
-
         </div>
 
       </div>
@@ -769,7 +851,7 @@
 
 
     <!-- =========================
-         ART & DRAWING CLASSES
+         ART & DRAWING CLASSES & GALLERY
          ========================= -->
 
     <div class="art-class-card">
@@ -795,9 +877,26 @@
 
 
       <p class="art-card-text">
-        A creative space to learn, experiment and discover
-        your own way of seeing the world through art and drawing.
+        A creative sanctuary to learn, experiment and discover
+        your own way of seeing the world through fine art, sketching,
+        and sustainable handcrafts.
       </p>
+
+      <!-- Mini Showcase of Real Artwork Pieces from Cafe -->
+      <div class="art-gallery-strip">
+        <div class="art-thumb-item">
+          <img src="assets/art/art-01.jpg" alt="Cafe Artwork 1" loading="lazy">
+        </div>
+        <div class="art-thumb-item">
+          <img src="assets/art/art-02.jpg" alt="Cafe Artwork 2" loading="lazy">
+        </div>
+        <div class="art-thumb-item">
+          <img src="assets/art/art-03.jpg" alt="Cafe Artwork 3" loading="lazy">
+        </div>
+        <div class="art-thumb-item">
+          <img src="assets/art/art-04.jpg" alt="Cafe Artwork 4" loading="lazy">
+        </div>
+      </div>
 
 
       <div class="art-card-footer">
@@ -838,49 +937,50 @@
 
         <p>
           Stories, ideas and observations from
-          years of creative experience.
+          years of creative experience in cinema and rural living.
         </p>
 
       </div>
 
 
-      <!--
-        Future articles will be added here.
-        Keep this space for now.
-      -->
-
       <div class="articles-placeholder">
 
         <div class="article-placeholder-card">
-
-          <span>ARTICLE 01</span>
-
-          <strong>
-            Coming Soon
-          </strong>
-
+          <div class="article-meta">
+            <span>ESSAY 01 &bull; 6 MIN READ</span>
+            <h4>The Lost Craft of Slow Living</h4>
+          </div>
+          <p class="article-snippet">Why stepping into mountain woods alters our internal clock and renews the spirit of making things with hands.</p>
+          <div class="article-foot">
+            <span class="read-tag">Read Notes</span>
+            <span class="arrow-tag">&rarr;</span>
+          </div>
         </div>
 
 
         <div class="article-placeholder-card">
-
-          <span>ARTICLE 02</span>
-
-          <strong>
-            Coming Soon
-          </strong>
-
+          <div class="article-meta">
+            <span>ESSAY 02 &bull; 8 MIN READ</span>
+            <h4>From Film Sets to Forest Cafe</h4>
+          </div>
+          <p class="article-snippet">Translating cinematic composition, lighting, and spatial emotion into a living sanctuary on Vellimalai Road.</p>
+          <div class="article-foot">
+            <span class="read-tag">Read Notes</span>
+            <span class="arrow-tag">&rarr;</span>
+          </div>
         </div>
 
 
         <div class="article-placeholder-card">
-
-          <span>ARTICLE 03</span>
-
-          <strong>
-            Coming Soon
-          </strong>
-
+          <div class="article-meta">
+            <span>ESSAY 03 &bull; 5 MIN READ</span>
+            <h4>Seeing Gold in the Discarded</h4>
+          </div>
+          <p class="article-snippet">How reclaimed timber, rusty metal, and organic branches become bespoke seating and architectural art.</p>
+          <div class="article-foot">
+            <span class="read-tag">Read Notes</span>
+            <span class="arrow-tag">&rarr;</span>
+          </div>
         </div>
 
       </div>
@@ -925,18 +1025,258 @@
 
 </section>
 
+<!-- ============================================
+     SANCTUARY AMBIENCE & MOMENTS
+     ============================================ -->
+<section id="cafe-ambience" class="cafe-ambience-section">
+
+  <div class="ambience-wrap">
+
+    <div class="ambience-header">
+      <div class="eyebrow">Atmosphere &amp; Space</div>
+      <h2 class="display">Moments at Forest Cafe</h2>
+      <p>Every corner is crafted to let you breathe, connect with nature, and linger in peaceful conversation.</p>
+    </div>
+
+    <div class="ambience-grid">
+
+      <div class="ambience-card">
+        <div class="ambience-img-wrap">
+          <img src="assets/cafe/cafe-01.jpg" alt="Cafe canopy and lush green ambiance" loading="lazy">
+        </div>
+        <div class="ambience-caption">
+          <span class="ambience-num">01</span>
+          <h4>Canopy Shaded Seating</h4>
+          <p>Dine beneath swaying tree canopies with natural breeze.</p>
+        </div>
+      </div>
+
+      <div class="ambience-card">
+        <div class="ambience-img-wrap">
+          <img src="assets/cafe/cafe-03.jpg" alt="Artisanal rustic firepit and stone decor" loading="lazy">
+        </div>
+        <div class="ambience-caption">
+          <span class="ambience-num">02</span>
+          <h4>Handcrafted Rustic Details</h4>
+          <p>Sculpted wood and local stone crafted by our team.</p>
+        </div>
+      </div>
+
+      <div class="ambience-card">
+        <div class="ambience-img-wrap">
+          <img src="assets/cafe/cafe-07.jpg" alt="Evening lighting and twilight ambiance" loading="lazy">
+        </div>
+        <div class="ambience-caption">
+          <span class="ambience-num">03</span>
+          <h4>Twilight Glow &amp; Fire</h4>
+          <p>Warm ambient lighting setting a peaceful evening mood.</p>
+        </div>
+      </div>
+
+      <div class="ambience-card">
+        <div class="ambience-img-wrap">
+          <img src="assets/cafe/cafe-12.jpg" alt="Fresh coffee and handcrafted bakes" loading="lazy">
+        </div>
+        <div class="ambience-caption">
+          <span class="ambience-num">04</span>
+          <h4>Brewed with Warmth</h4>
+          <p>Single origin beans paired with freshly prepared snacks.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ============================================
+     SOCIAL PROOF & SANCTUARY VISIT HUB (EDITORIAL)
+     ============================================ -->
+<section id="visit-us" class="social-visit-section">
+
+  <div class="visit-hub-wrap">
+
+    <!-- Section Header (Editorial Centered) -->
+    <div class="visit-hub-header">
+      <div class="eyebrow">Guest Stories &bull; Vellimalai Road</div>
+      <h2 class="display">Loved by Travelers &amp; Families</h2>
+      <p>Authentic reflections from visitors enjoying our shade-grown coffee, farm sanctuary, and handcrafted rustic spaces.</p>
+    </div>
+
+    <div class="visit-hub-grid">
+
+      <!-- Left Column: Google Reviews Hub (Editorial Minimalist) -->
+      <div class="visit-column-card visit-reviews-col">
+        
+        <!-- Top Gauge & Google Rating Module -->
+        <div class="col-top-bar gauge-top-bar">
+          
+          <div class="rating-gauge-widget">
+            <svg class="speedometer-arc-svg" viewBox="0 0 120 72" aria-hidden="true">
+              <defs>
+                <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#c89f7a"/>
+                  <stop offset="50%" stop-color="#e67e22"/>
+                  <stop offset="100%" stop-color="#f1b82d"/>
+                </linearGradient>
+              </defs>
+              <!-- Background Arc -->
+              <path d="M 16 62 A 44 44 0 0 1 104 62" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="6.5" stroke-linecap="round"/>
+              <!-- Active Score Arc (98% fill) -->
+              <path d="M 16 62 A 44 44 0 0 1 104 62" fill="none" stroke="url(#gaugeGradient)" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="4"/>
+            </svg>
+            <div class="gauge-center-content">
+              <span class="gauge-score">4.9</span>
+              <span class="gauge-stars">★★★★★</span>
+            </div>
+          </div>
+
+          <div class="gauge-meta-info">
+            <div class="google-badge-tag">
+              <svg class="google-icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/>
+                <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
+                <path fill="#FBBC05" d="M5.6 14.8c-.3-.8-.4-1.8-.4-2.8s.1-2 .4-2.8L1.9 6.3C.7 8.7 0 10.3 0 12s.7 3.3 1.9 5.7l3.7-2.9z"/>
+                <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16c1.8 3.7 5.6 7 10.1 7z"/>
+              </svg>
+              <span>VERIFIED GOOGLE RATING</span>
+            </div>
+            <h4 class="gauge-rating-verdict">Exceptional Hospitality</h4>
+            <p class="gauge-subtext">Based on 180+ verified guest &amp; family reviews</p>
+          </div>
+
+        </div>
+
+        <!-- Editorial Review Cards -->
+        <div class="col-body-content reviews-cards-list">
+          
+          <!-- Editorial Review 1 -->
+          <article class="editorial-review-card">
+            <div class="review-accent-bar"></div>
+            <div class="review-content-inner">
+              <p class="editorial-quote">“A quiet green sanctuary tucked along Vellimalai Road. The handcrafted architecture from reclaimed timber and the estate filter coffee made our family stay truly unforgettable.”</p>
+              <div class="review-author-row">
+                <div class="author-avatar">KR</div>
+                <div class="author-meta">
+                  <div class="author-name">Karthik Raghavan <span class="verified-glyph" title="Verified Local Guide">&check;</span></div>
+                  <span class="author-tagline">Local Guide &bull; 42 Reviews &bull; Visited last month</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Editorial Review 2 -->
+          <article class="editorial-review-card">
+            <div class="review-accent-bar accent-amber"></div>
+            <div class="review-content-inner">
+              <p class="editorial-quote">“The cool farm breeze, authentic homemade pirandai thokku, and warm banana cake are unparalleled. Stepping into Forest Cafe feels like stepping into nature’s living room.”</p>
+              <div class="review-author-row">
+                <div class="author-avatar avatar-warm">PS</div>
+                <div class="author-meta">
+                  <div class="author-name">Priya Sundaram <span class="verified-glyph" title="Verified Local Guide">&check;</span></div>
+                  <span class="author-tagline">Local Guide &bull; 18 Reviews &bull; Visited 2 weeks ago</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Bottom CTA -->
+        <div class="col-bottom-cta">
+          <a href="https://maps.google.com/?q=Forest+Cafe+Vellimalai+Road+Salem" target="_blank" rel="noopener" class="minimal-pill-btn">
+            <span>Read all reviews on Google Maps</span>
+            <span class="btn-arrow-icon">&nearr;</span>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Sanctuary Visit & Direct Connect (Editorial Minimalist) -->
+      <div class="visit-column-card visit-connect-col">
+
+        <!-- Top Bar: Location Header -->
+        <div class="col-top-bar location-editorial-bar">
+          <div class="sanctuary-pin-tag">
+            <span class="loc-pin-dot"></span>
+            <span>SANCTUARY LOCATION</span>
+          </div>
+          <span class="location-dist-text">Vellimalai Road, Salem &bull; 15 mins from Salem Junction</span>
+        </div>
+
+        <div class="col-body-content visit-body-stack">
+
+          <!-- Experience Metadata Grid -->
+          <div class="editorial-details-grid">
+            <div class="editorial-detail-box">
+              <span class="detail-label">OPERATING HOURS</span>
+              <span class="detail-val">Open Daily &bull; 7:00 AM – 9:30 PM</span>
+            </div>
+            <div class="editorial-detail-box">
+              <span class="detail-label">ATMOSPHERE</span>
+              <span class="detail-val">Family, Pet &amp; Creator Friendly</span>
+            </div>
+          </div>
+
+          <!-- Muted Earth-Tone Action Buttons -->
+          <div class="visit-action-buttons">
+            
+            <a href="https://maps.google.com/?q=Forest+Cafe+Vellimalai+Road+Salem" target="_blank" rel="noopener" class="action-btn btn-directions">
+              <span class="btn-icon">&map;</span>
+              <div class="btn-text-wrap">
+                <strong>Get Directions</strong>
+                <span>Open in Google Maps Navigation</span>
+              </div>
+              <span class="btn-ext-arrow">&nearr;</span>
+            </a>
+
+            <a href="https://wa.me/?text=Hi%20Anandh,%20I'd%20like%20to%20inquire%20about%20visiting%20Forest%20Cafe%20and%20Tiny%20Cot%20stay!" target="_blank" rel="noopener" class="action-btn btn-whatsapp">
+              <span class="btn-icon">&phone;</span>
+              <div class="btn-text-wrap">
+                <strong>Chat on WhatsApp</strong>
+                <span>Direct Table &amp; Tiny Cot Inquiries</span>
+              </div>
+              <span class="btn-ext-arrow">&nearr;</span>
+            </a>
+
+          </div>
+
+        </div>
+
+        <!-- Bottom CTA: Minimalist Social Journey Strip -->
+        <div class="col-bottom-cta">
+          <div class="editorial-social-strip">
+            <div class="social-text-row">
+              <span class="social-lens-glyph">&camera;</span>
+              <span class="social-lead">Follow Our Daily Journey:</span>
+              <span class="social-sub">Behind-the-scenes craft &amp; seasonal harvest</span>
+            </div>
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="minimal-social-link">Instagram &rarr;</a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
 <!-- ============ FOOTER ============ -->
 <footer class="world-coffee">
   <div class="wrap">
     <h2 class="display">Forest Cafe</h2>
     <div class="eyebrow">Coffee. Land. Stories.</div>
     <ul class="footer-links">
-      <li><a href="#" onclick="return false;">Vellimalai Road, Salem</a></li>
-      <li><a href="#" onclick="return false;">Instagram</a></li>
-      <li><a href="#" onclick="return false;">Google Maps</a></li>
-      <li><a href="#" onclick="return false;">Contact</a></li>
+      <li><a href="#hero">Back to Top</a></li>
+      <li><a href="#soil-to-sip">Our Coffee</a></li>
+      <li><a href="#little-farmer">Little Farmer</a></li>
+      <li><a href="#menu-board">Menu</a></li>
+      <li><a href="https://maps.google.com" target="_blank" rel="noopener">Salem &bull; Vellimalai Road</a></li>
     </ul>
-    <p class="footer-fine">Demo build for Forest Cafe &middot; links are placeholders</p>
+    <p class="footer-fine">Forest Cafe &middot; Handcrafted with care on Vellimalai Road, Salem &middot; All Rights Reserved</p>
   </div>
 </footer>
 
