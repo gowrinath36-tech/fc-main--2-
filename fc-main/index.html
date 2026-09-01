@@ -169,144 +169,99 @@
 
   <div class="sts-wrap">
 
+    <!-- S-Curve Dynamic SVG MotionPath spanning across from left rail into Stage 05 Cup -->
+    <div class="sts-svg-wrap">
+      <svg class="sts-track-svg" viewBox="0 0 1200 700" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <mask id="sts-track-mask">
+            <path
+              id="sts-mask-path"
+              d="M 150 25 C 100 80, 200 120, 180 180 C 120 250, 190 320, 120 380 C 80 440, 180 500, 175 560 C 130 620, 250 640, 550 440"
+              fill="none"
+              stroke="white"
+              stroke-width="12"
+              stroke-linecap="round"
+            ></path>
+          </mask>
+        </defs>
+
+        <!-- Background Dashed Track -->
+        <path
+          class="sts-line-bg"
+          d="M 150 25 C 100 80, 200 120, 180 180 C 120 250, 190 320, 120 380 C 80 440, 180 500, 175 560 C 130 620, 250 640, 550 440"
+        ></path>
+
+        <!-- Animated Active Dashed Track -->
+        <path
+          class="sts-line-active"
+          mask="url(#sts-track-mask)"
+          d="M 150 25 C 100 80, 200 120, 180 180 C 120 250, 190 320, 120 380 C 80 440, 180 500, 175 560 C 130 620, 250 640, 550 440"
+        ></path>
+      </svg>
+    </div>
+
+    <!-- Animated Rolling Bean / Coffee Drop Particle (Dynamic Color: Green -> Cherry Red -> Artisanal Roast -> Drop into Stage 05 Cup) -->
+    <div id="sts-bean-tracker" class="sts-bean-tracker">
+      <svg viewBox="0 0 40 40" class="bean-svg-icon" aria-hidden="true">
+        <ellipse id="bean-body" cx="20" cy="20" rx="15" ry="10.5" fill="#6b8e23" transform="rotate(-30 20 20)" />
+        <path id="bean-crevice" d="M 9 20 C 14 15, 26 25, 31 20" stroke="#3e5314" stroke-width="2.2" stroke-linecap="round" fill="none" transform="rotate(-30 20 20)" />
+      </svg>
+    </div>
+
     <!-- ====================================================
-         LEFT COLUMN (~24%): Sidebar Rail with S-Curve & Bean
+         LEFT COLUMN (~24%): Sidebar Rail with Milestone Icons
          ==================================================== -->
     <div class="sts-left-track">
 
-      <!-- S-Curve SVG Track -->
-      <div class="sts-svg-wrap">
-        <svg class="sts-track-svg" viewBox="0 0 120 1000" preserveAspectRatio="none" aria-hidden="true">
-          <defs>
-            <mask id="sts-track-mask">
-              <path
-                id="sts-mask-path"
-                d="
-                  M 60 0
-                  C 25 70, 95 130, 75 200
-                  C 25 280, 95 360, 45 440
-                  C 20 520, 100 600, 75 680
-                  C 25 760, 95 830, 45 900
-                  C 20 930, 60 945, 60 960
-                "
-                fill="none"
-                stroke="white"
-                stroke-width="12"
-                stroke-linecap="round"
-              ></path>
-            </mask>
-          </defs>
+      <!-- Small Milestone Cartoon Icons along the Track -->
+      <div class="sts-track-icons">
 
-          <!-- Background Dashed Track -->
-          <path
-            class="sts-line-bg"
-            d="
-              M 60 0
-              C 25 70, 95 130, 75 200
-              C 25 280, 95 360, 45 440
-              C 20 520, 100 600, 75 680
-              C 25 760, 95 830, 45 900
-              C 20 930, 60 945, 60 960
-            "
-          ></path>
-
-          <!-- Animated Active Dashed Track -->
-          <path
-            class="sts-line-active"
-            mask="url(#sts-track-mask)"
-            d="
-              M 60 0
-              C 25 70, 95 130, 75 200
-              C 25 280, 95 360, 45 440
-              C 20 520, 100 600, 75 680
-              C 25 760, 95 830, 45 900
-              C 20 930, 60 945, 60 960
-            "
-          ></path>
-        </svg>
-
-        <!-- Animated Rolling Bean / Cherry Tracker (Dynamic Color: Green -> Red -> Brown -> Dropping into Cup) -->
-        <div id="sts-bean-tracker" class="sts-bean-tracker">
-          <svg viewBox="0 0 40 40" class="bean-svg-icon" aria-hidden="true">
-            <ellipse id="bean-body" cx="20" cy="20" rx="15" ry="10.5" fill="#6b8e23" transform="rotate(-30 20 20)" />
-            <path id="bean-crevice" d="M 9 20 C 14 15, 26 25, 31 20" stroke="#3e5314" stroke-width="2.2" stroke-linecap="round" fill="none" transform="rotate(-30 20 20)" />
+        <!-- Icon 1: Sprout (~18%) -->
+        <div class="sts-track-icon-item sts-icon-1" data-stage="0" style="top: 18%; left: 50%;">
+          <svg viewBox="0 0 60 60" class="mini-icon-svg" aria-label="Sprout">
+            <path d="M 8 50 C 15 42, 45 42, 52 50 Z" fill="#634532" />
+            <path d="M 30 46 Q 29 32, 30 18" stroke="#7bb03b" stroke-width="3" stroke-linecap="round" fill="none" />
+            <path d="M 30 24 Q 16 14, 10 20 Q 18 28, 30 24 Z" fill="#6ca32b" />
+            <path d="M 30 19 Q 44 8, 50 14 Q 42 22, 30 19 Z" fill="#84bf34" />
           </svg>
         </div>
 
-        <!-- 5 Small Milestone Cartoon Icons along the Track -->
-        <div class="sts-track-icons">
+        <!-- Icon 2: Cherries (~36%) -->
+        <div class="sts-track-icon-item sts-icon-2" data-stage="1" style="top: 36%; left: 50%;">
+          <svg viewBox="0 0 60 60" class="mini-icon-svg" aria-label="Cherries">
+            <path d="M 10 40 Q 30 28, 50 20" stroke="#5c3e2b" stroke-width="3" stroke-linecap="round" fill="none" />
+            <path d="M 24 34 Q 10 24, 8 12 Q 24 18, 24 34 Z" fill="#366b2d" />
+            <path d="M 36 30 Q 28 12, 38 4 Q 46 18, 36 30 Z" fill="#47853b" />
+            <circle cx="32" cy="32" r="5.5" fill="#cc2b2b" />
+            <circle cx="40" cy="27" r="6" fill="#e23333" />
+            <circle cx="43" cy="35" r="5" fill="#a81e1e" />
+          </svg>
+        </div>
 
-          <!-- Icon 1: Sprout (~12%) -->
-          <div class="sts-track-icon-item sts-icon-1" data-stage="0" style="top: 12%; left: 75%;">
-            <svg viewBox="0 0 60 60" class="mini-icon-svg" aria-label="Sprout">
-              <path d="M 8 50 C 15 42, 45 42, 52 50 Z" fill="#634532" />
-              <path d="M 30 46 Q 29 32, 30 18" stroke="#7bb03b" stroke-width="3" stroke-linecap="round" fill="none" />
-              <path d="M 30 24 Q 16 14, 10 20 Q 18 28, 30 24 Z" fill="#6ca32b" />
-              <path d="M 30 19 Q 44 8, 50 14 Q 42 22, 30 19 Z" fill="#84bf34" />
-            </svg>
-          </div>
+        <!-- Icon 3: Bean Pile (~54%) -->
+        <div class="sts-track-icon-item sts-icon-3" data-stage="2" style="top: 54%; left: 50%;">
+          <svg viewBox="0 0 60 60" class="mini-icon-svg" aria-label="Roasted Beans">
+            <ellipse cx="30" cy="46" rx="22" ry="7" fill="#2d1a0e" opacity="0.6" />
+            <ellipse cx="18" cy="44" rx="6" ry="4" fill="#54331d" transform="rotate(-10 18 44)" />
+            <ellipse cx="28" cy="45" rx="6.5" ry="4.2" fill="#422716" transform="rotate(15 28 45)" />
+            <ellipse cx="39" cy="44" rx="6" ry="4" fill="#5e3921" transform="rotate(-20 39 44)" />
+            <ellipse cx="23" cy="39" rx="6" ry="4" fill="#6a4025" transform="rotate(25 23 39)" />
+            <ellipse cx="35" cy="39" rx="6.2" ry="4.2" fill="#52311b" transform="rotate(-15 35 39)" />
+            <ellipse cx="29" cy="33" rx="6" ry="4" fill="#754829" />
+          </svg>
+        </div>
 
-          <!-- Icon 2: Cherries (~35%) -->
-          <div class="sts-track-icon-item sts-icon-2" data-stage="1" style="top: 35%; left: 35%;">
-            <svg viewBox="0 0 60 60" class="mini-icon-svg" aria-label="Cherries">
-              <path d="M 10 40 Q 30 28, 50 20" stroke="#5c3e2b" stroke-width="3" stroke-linecap="round" fill="none" />
-              <path d="M 24 34 Q 10 24, 8 12 Q 24 18, 24 34 Z" fill="#366b2d" />
-              <path d="M 36 30 Q 28 12, 38 4 Q 46 18, 36 30 Z" fill="#47853b" />
-              <circle cx="32" cy="32" r="5.5" fill="#cc2b2b" />
-              <circle cx="40" cy="27" r="6" fill="#e23333" />
-              <circle cx="43" cy="35" r="5" fill="#a81e1e" />
-            </svg>
-          </div>
-
-          <!-- Icon 3: Bean Pile (~58%) -->
-          <div class="sts-track-icon-item sts-icon-3" data-stage="2" style="top: 58%; left: 70%;">
-            <svg viewBox="0 0 60 60" class="mini-icon-svg" aria-label="Roasted Beans">
-              <ellipse cx="30" cy="46" rx="22" ry="7" fill="#2d1a0e" opacity="0.6" />
-              <ellipse cx="18" cy="44" rx="6" ry="4" fill="#54331d" transform="rotate(-10 18 44)" />
-              <ellipse cx="28" cy="45" rx="6.5" ry="4.2" fill="#422716" transform="rotate(15 28 45)" />
-              <ellipse cx="39" cy="44" rx="6" ry="4" fill="#5e3921" transform="rotate(-20 39 44)" />
-              <ellipse cx="23" cy="39" rx="6" ry="4" fill="#6a4025" transform="rotate(25 23 39)" />
-              <ellipse cx="35" cy="39" rx="6.2" ry="4.2" fill="#52311b" transform="rotate(-15 35 39)" />
-              <ellipse cx="29" cy="33" rx="6" ry="4" fill="#754829" />
-            </svg>
-          </div>
-
-          <!-- Icon 4: Grinder (~80%) -->
-          <div class="sts-track-icon-item sts-icon-4" data-stage="3" style="top: 80%; left: 35%;">
-            <svg viewBox="0 0 60 60" class="mini-icon-svg" aria-label="Grinder">
-              <path d="M 30 14 L 48 11" stroke="#4a3728" stroke-width="2" stroke-linecap="round" />
-              <circle cx="48" cy="11" r="2.5" fill="#8c5a36" />
-              <path d="M 20 18 C 20 27, 40 27, 40 18 Z" fill="#4d7064" />
-              <rect x="17" y="27" width="26" height="23" rx="2" fill="#a0683f" stroke="#5e3b21" stroke-width="1.5" />
-              <rect x="21" y="33" width="18" height="13" rx="1" fill="#7a4c2b" />
-              <circle cx="30" cy="40" r="2" fill="#d9a25f" />
-              <rect x="15" y="50" width="30" height="3.5" rx="1" fill="#5e3b21" />
-            </svg>
-          </div>
-
-          <!-- Icon 5: Coffee Cup with Steam and Ripple at bottom (~96%) -->
-          <div class="sts-track-icon-item sts-icon-5 sts-final-cup" data-stage="4" style="top: 95%; left: 50%;">
-            <svg viewBox="0 0 100 90" class="mini-cup-svg" aria-label="Coffee Cup Destination">
-              <!-- Steam animation -->
-              <g id="cup-steam-group" class="cup-steam-anim">
-                <path d="M 40 20 C 36 12, 44 8, 40 0" stroke="#f4ede4" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.85" />
-                <path d="M 50 22 C 46 14, 54 10, 50 2" stroke="#f4ede4" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.85" />
-                <path d="M 60 25 C 56 16, 64 12, 60 4" stroke="#f4ede4" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.85" />
-              </g>
-              <!-- Saucer -->
-              <ellipse cx="50" cy="78" rx="38" ry="8" fill="#ede5d8" stroke="#b8a892" stroke-width="1.5" />
-              <!-- Cup Handle -->
-              <path d="M 68 46 C 82 46, 82 66, 66 66" stroke="#ede5d8" stroke-width="4.5" fill="none" stroke-linecap="round" />
-              <!-- Cup Body -->
-              <path d="M 30 40 L 35 68 C 36 74, 64 74, 65 68 L 70 40 Z" fill="#f4ede4" stroke="#c4b49e" stroke-width="1.5" />
-              <!-- Liquid Surface -->
-              <ellipse cx="50" cy="40" rx="20" ry="6" fill="#361f12" />
-              <!-- Crema & Ripple effect -->
-              <ellipse id="cup-crema" cx="50" cy="40" rx="17" ry="4.5" fill="#6d3e1d" />
-              <circle id="cup-ripple" cx="50" cy="40" r="2" fill="none" stroke="#d4a373" stroke-width="1.5" opacity="0" />
-            </svg>
-          </div>
-
+        <!-- Icon 4: Grinder (~70%) -->
+        <div class="sts-track-icon-item sts-icon-4" data-stage="3" style="top: 70%; left: 50%;">
+          <svg viewBox="0 0 60 60" class="mini-icon-svg" aria-label="Grinder">
+            <path d="M 30 14 L 48 11" stroke="#4a3728" stroke-width="2" stroke-linecap="round" />
+            <circle cx="48" cy="11" r="2.5" fill="#8c5a36" />
+            <path d="M 20 18 C 20 27, 40 27, 40 18 Z" fill="#4d7064" />
+            <rect x="17" y="27" width="26" height="23" rx="2" fill="#a0683f" stroke="#5e3b21" stroke-width="1.5" />
+            <rect x="21" y="33" width="18" height="13" rx="1" fill="#7a4c2b" />
+            <circle cx="30" cy="40" r="2" fill="#d9a25f" />
+            <rect x="15" y="50" width="30" height="3.5" rx="1" fill="#5e3b21" />
+          </svg>
         </div>
 
       </div>
@@ -382,8 +337,12 @@
         <!-- Stage 05: The Perfect Sip -->
         <article class="sts-stage-card sts-card-4" data-index="4">
           <div class="sts-card-img-box">
-            <img src="assets/journey/08-sip.jpg" alt="Steaming coffee cup" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img src="assets/journey/08-sip.jpg" alt="Steaming coffee cup" class="stage-05-img" id="cup" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="sts-fallback-badge">IMAGE 05 &bull; THE CUP</div>
+            <!-- Dynamic Crema Ripple Target inside Stage 05 Cup -->
+            <div class="cup-drop-target" aria-hidden="true">
+              <div class="cup-landing-ripple" id="cup-landing-ripple"></div>
+            </div>
           </div>
           <div class="sts-card-info">
             <span class="sts-step-tag">STAGE 05 &bull; THE CUP</span>
