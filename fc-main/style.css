@@ -750,8 +750,9 @@ section { position: relative; }
   position: relative;
   width: 100%;
   height: 100vh;
+  min-height: 650px;
   display: flex;
-  align-items: stretch;
+  align-items: center;
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 4vw;
@@ -761,6 +762,7 @@ section { position: relative; }
 }
 
 /* Dynamic SVG Track Overlay across entire wrap */
+#sts-svg-container,
 .sts-svg-wrap {
   position: absolute;
   inset: 0;
@@ -819,10 +821,11 @@ section { position: relative; }
 }
 
 /* ====================================================
-   LEFT COLUMN (~24%): Sidebar Rail with Milestone Icons
+   LEFT COLUMN (~24%): Dedicated Visual Track & Sidebar Rail
    ==================================================== */
 
-.sts-left-track {
+.sts-left-track,
+.sts-path-column {
   position: relative;
   flex: 0 0 24%;
   height: 100%;
@@ -948,6 +951,7 @@ section { position: relative; }
   position: relative;
   background: #140d0a;
   overflow: hidden;
+  z-index: 22;
 }
 
 .sts-card-img-box img {
@@ -962,28 +966,125 @@ section { position: relative; }
   transform: scale(1.05);
 }
 
-/* Stage 05 Cup Landing Ripple Indicator */
-.cup-drop-target {
+/* Stage 05 Photo Card Image */
+.stage-05-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+/* Standalone Bottom-Left Destination Cup */
+.sts-destination-cup {
   position: absolute;
-  top: 60%;
+  bottom: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 96px;
+  height: 85px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  pointer-events: none;
+  overflow: visible;
+  opacity: 1;
+}
+
+.destination-cup-wrap {
+  position: relative;
+  width: 80px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.destination-cup-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 14px rgba(200, 159, 122, 0.35));
+  overflow: visible;
+}
+
+/* Rising Steam from the Destination Cup */
+.cup-steam {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34px;
+  height: 24px;
+  display: flex;
+  justify-content: space-around;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.steam-line {
+  width: 2.5px;
+  height: 16px;
+  background: linear-gradient(180deg, transparent 0%, rgba(244, 237, 228, 0.6) 50%, transparent 100%);
+  border-radius: 2px;
+  animation: steamRise 2.4s infinite ease-in-out;
+}
+
+.steam-line.steam-1 {
+  animation-delay: 0s;
+  height: 14px;
+}
+
+.steam-line.steam-2 {
+  animation-delay: 0.8s;
+  height: 18px;
+}
+
+.steam-line.steam-3 {
+  animation-delay: 1.4s;
+  height: 15px;
+}
+
+@keyframes steamRise {
+  0% {
+    opacity: 0;
+    transform: translateY(6px) scaleX(0.8);
+  }
+  50% {
+    opacity: 0.75;
+    transform: translateY(-4px) scaleX(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-16px) scaleX(1.6);
+  }
+}
+
+/* Destination Cup Landing Ripple */
+.sts-destination-cup .cup-drop-target {
+  position: absolute;
+  top: 24px;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 60px;
-  height: 30px;
+  width: 50px;
+  height: 20px;
   pointer-events: none;
-  z-index: 10;
+  z-index: 30;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.cup-landing-ripple {
-  width: 16px;
+.sts-destination-cup .cup-landing-ripple {
+  width: 18px;
   height: 10px;
   border-radius: 50%;
   border: 2px solid #d4a373;
-  box-shadow: 0 0 14px rgba(212, 163, 115, 0.9), inset 0 0 8px rgba(212, 163, 115, 0.5);
-  background: radial-gradient(ellipse at center, rgba(212, 163, 115, 0.45) 0%, transparent 75%);
+  box-shadow: 0 0 16px rgba(212, 163, 115, 0.95), inset 0 0 8px rgba(212, 163, 115, 0.6);
+  background: radial-gradient(ellipse at center, rgba(212, 163, 115, 0.6) 0%, transparent 75%);
   opacity: 0;
   transform: scale(0.4);
   pointer-events: none;

@@ -440,502 +440,271 @@ window.addEventListener(
    ============================================ */
 
 function initSoilToSip() {
-
-  const section = document.querySelector("#soil-to-sip");
-
+  const section = document.querySelector("#soil-to-sip") || document.querySelector("#farm");
   if (!section) return;
-
 
   const isMobile = window.innerWidth <= 900;
 
-
   if (isMobile) {
-
     // On mobile, show cards normally in single vertical flow
-
     const cards = document.querySelectorAll(".sts-stage-card");
-
     cards.forEach((c) => {
-
       c.classList.add("active");
-
       c.style.opacity = "1";
-
       c.style.transform = "none";
-
     });
-
     return;
-
   }
 
-
   // Desktop scroll-driven path tracking animation with GSAP Pinning
-
   const stsWrap = section.querySelector(".sts-wrap");
-
   const maskPath = document.querySelector("#sts-mask-path");
-
   const bgPath = document.querySelector(".sts-line-bg");
-
   const activePath = document.querySelector(".sts-line-active");
-
   const svgEl = document.querySelector(".sts-track-svg");
-
   const bean = document.querySelector("#sts-bean-tracker");
-
   const beanBody = document.querySelector("#bean-body");
-
   const beanCrevice = document.querySelector("#bean-crevice");
-
   const trackIcons = document.querySelectorAll(".sts-track-icon-item");
-
   const stageCards = document.querySelectorAll(".sts-stage-card");
-
   const cupLandingRipple = document.querySelector("#cup-landing-ripple");
-
 
   if (!maskPath || !bean || !stsWrap) return;
 
-
   let pathLength = 0;
 
-
-  // Dynamically calculate the SVG MotionPath coordinates to land directly inside STAGE 05 Cup
-
+  // Dynamically calculate the SVG MotionPath coordinates winding down the left rail into the bottom-left destination cup
   function buildPath() {
-
     const wrapRect = stsWrap.getBoundingClientRect();
-
     const W = wrapRect.width || 1200;
-
     const H = wrapRect.height || 700;
 
-
     // Left track rail center X
-
     const leftTrack = section.querySelector(".sts-left-track");
-
     const leftTrackRect = leftTrack ? leftTrack.getBoundingClientRect() : null;
-
     const startX = leftTrackRect ? (leftTrackRect.left + leftTrackRect.width * 0.5 - wrapRect.left) : (W * 0.12);
 
+    // Standalone Bottom-Left Destination Cup top rim coordinates
+    const destCup = section.querySelector("#sts-destination-cup");
+    let targetX = startX;
+    let targetY = H * 0.85;
 
-    // Coffee Cup graphic/photo center inside STAGE 05 card (#cup or .stage-05-img)
-
-    const cupImg = document.querySelector("#cup") || document.querySelector(".stage-05-img") || document.querySelector(".sts-card-4 .sts-card-img-box");
-
-    let targetX = W * 0.45;
-
-    let targetY = H * 0.60;
-
-
-    if (cupImg) {
-
-      const cupRect = cupImg.getBoundingClientRect();
-
+    if (destCup) {
+      const cupRect = destCup.getBoundingClientRect();
       if (cupRect.width > 0 && cupRect.height > 0) {
-
         targetX = (cupRect.left + cupRect.width * 0.5) - wrapRect.left;
-
-        targetY = (cupRect.top + cupRect.height * 0.60) - wrapRect.top;
-
+        targetY = (cupRect.top + 24) - wrapRect.top;
       }
-
     }
 
-
-    // Rail milestone coordinates
-
-    const p0 = { x: startX, y: H * 0.05 };
-
-    const p1 = { x: startX + 22, y: H * 0.18 }; // Sprout (~18%)
-
-    const p2 = { x: startX - 22, y: H * 0.36 }; // Cherries (~36%)
-
+    // Rail milestone coordinates along the left visual track
+    const p0 = { x: startX, y: H * 0.08 };
+    const p1 = { x: startX + 22, y: H * 0.20 }; // Sprout (~20%)
+    const p2 = { x: startX - 22, y: H * 0.38 }; // Cherries (~38%)
     const p3 = { x: startX + 22, y: H * 0.54 }; // Roast (~54%)
-
     const p4 = { x: startX - 18, y: H * 0.70 }; // Grind (~70%)
-
-    const p5 = { x: targetX, y: targetY };      // Terminal endpoint: Directly inside STAGE 05 • THE CUP card!
-
+    const p5 = { x: targetX, y: targetY };      // Terminal endpoint: Bottom-Left Destination Cup Rim (~85%)
 
     // Position milestone icons over their respective rail coordinates
-
     if (trackIcons.length >= 4) {
-
       if (trackIcons[0]) { trackIcons[0].style.left = `${p1.x}px`; trackIcons[0].style.top = `${p1.y}px`; }
-
       if (trackIcons[1]) { trackIcons[1].style.left = `${p2.x}px`; trackIcons[1].style.top = `${p2.y}px`; }
-
       if (trackIcons[2]) { trackIcons[2].style.left = `${p3.x}px`; trackIcons[2].style.top = `${p3.y}px`; }
-
       if (trackIcons[3]) { trackIcons[3].style.left = `${p4.x}px`; trackIcons[3].style.top = `${p4.y}px`; }
-
     }
 
-
-    // Smooth cubic bezier sweeping from Grind (p4) right into Stage 05 Cup (p5)
-
-    const ctrl1X = p4.x + (targetX - p4.x) * 0.25;
-
-    const ctrl1Y = p4.y + (targetY - p4.y) * 0.60;
-
-    const ctrl2X = targetX - (targetX - p4.x) * 0.28;
-
-    const ctrl2Y = targetY + 30;
-
-
+    // Pure vertical winding S-curve staying entirely on the left side and entering the bottom-left cup
     const pathData = `
       M ${p0.x} ${p0.y}
-      C ${startX - 28} ${H * 0.10}, ${startX + 32} ${H * 0.12}, ${p1.x} ${p1.y}
-      C ${startX + 18} ${H * 0.26}, ${startX - 32} ${H * 0.28}, ${p2.x} ${p2.y}
+      C ${startX - 28} ${H * 0.12}, ${startX + 32} ${H * 0.14}, ${p1.x} ${p1.y}
+      C ${startX + 18} ${H * 0.28}, ${startX - 32} ${H * 0.30}, ${p2.x} ${p2.y}
       C ${startX - 18} ${H * 0.44}, ${startX + 32} ${H * 0.46}, ${p3.x} ${p3.y}
       C ${startX + 18} ${H * 0.62}, ${startX - 28} ${H * 0.64}, ${p4.x} ${p4.y}
-      C ${ctrl1X} ${ctrl1Y}, ${ctrl2X} ${ctrl2Y}, ${p5.x} ${p5.y}
+      C ${startX + 24} ${H * 0.76}, ${targetX - 16} ${targetY - 25}, ${p5.x} ${p5.y}
     `;
 
-
     if (svgEl) {
-
       svgEl.setAttribute("viewBox", `0 0 ${W} ${H}`);
-
     }
-
     if (maskPath) maskPath.setAttribute("d", pathData);
-
     if (bgPath) bgPath.setAttribute("d", pathData);
-
     if (activePath) activePath.setAttribute("d", pathData);
 
-
     pathLength = maskPath.getTotalLength();
-
     maskPath.style.strokeDasharray = pathLength;
-
     maskPath.style.strokeDashoffset = pathLength;
-
   }
-
 
   buildPath();
 
-
-  // The full MotionPath particle finishes cleanly and lands in cup at 80% scroll
-
-  const journeyEndProgress = 0.80;
-
+  // The full MotionPath particle finishes cleanly and lands in cup at 82% scroll
+  const journeyEndProgress = 0.82;
 
   ScrollTrigger.create({
-
     trigger: section,
-
     start: "top top",
-
-    end: "+=160%", // Pinned duration as specified
-
+    end: "+=300%", // Pinned duration allowing smooth unhurried journey through all 5 stages
     pin: true,
-
-    scrub: 1.2, // Smooth organic scrub
-
+    scrub: 1, // Smooth fluid scrub as requested
     anticipatePin: 1,
-
     invalidateOnRefresh: true,
-
     onUpdate: (self) => {
-
       const progress = self.progress; // 0.0 to 1.0
 
-
-      // Normalize journey animation progress (0.0 to 1.0 within 0.0 -> 0.80)
-
+      // Normalize journey animation progress (0.0 to 1.0 within 0.0 -> 0.82)
       const animProgress = Math.min(1, Math.max(0, progress / journeyEndProgress));
 
-
       // 1. Draw active path stroke via mask offset
-
       if (pathLength > 0 && maskPath) {
-
         maskPath.style.strokeDashoffset = pathLength - animProgress * pathLength;
-
       }
-
 
       // 2. Position bean tracker along the path
-
       if (maskPath && pathLength > 0) {
-
         const point = maskPath.getPointAtLength(animProgress * pathLength);
-
         bean.style.left = `${point.x}px`;
-
         bean.style.top = `${point.y}px`;
-
       }
-
 
       // Rotational rolling effect (4 full rotations across the journey)
-
       const rotation = animProgress * 1440;
 
-
       // 3. Dynamic Color Transition:
-
       // 0% – 25%: Raw Green (#6b8e23)
-
       // 25% – 52%: Green -> Ripe Red Cherry (#c0392b)
-
       // 52% – 78%: Red -> Rich Roasted Brown (#4a2c11 to #2c1810)
-
       // 78% – 100%: Dropping into cup (#2c1810)
-
       let fillColor = "#6b8e23";
-
       let creviceColor = "#3e5314";
-
       let glowColor = "rgba(107, 142, 35, 0.85)";
 
-
       if (animProgress < 0.25) {
-
         fillColor = "#6b8e23";
-
         creviceColor = "#3e5314";
-
         glowColor = "rgba(107, 142, 35, 0.85)";
-
       } else if (animProgress < 0.52) {
-
         const t = (animProgress - 0.25) / 0.27;
-
         const r = Math.round(107 + (192 - 107) * t);
-
         const g = Math.round(142 + (57 - 142) * t);
-
         const b = Math.round(35 + (43 - 35) * t);
-
         fillColor = `rgb(${r}, ${g}, ${b})`;
-
         creviceColor = `rgb(${Math.round(62 + (120 - 62) * t)}, ${Math.round(83 + (30 - 83) * t)}, 20)`;
-
         glowColor = "rgba(192, 57, 43, 0.85)";
-
       } else if (animProgress < 0.78) {
-
         const t = (animProgress - 0.52) / 0.26;
-
         const r = Math.round(192 + (44 - 192) * t);
-
         const g = Math.round(57 + (24 - 57) * t);
-
         const b = Math.round(43 + (16 - 43) * t);
-
         fillColor = `rgb(${r}, ${g}, ${b})`;
-
         creviceColor = `rgb(${Math.round(120 + (21 - 120) * t)}, ${Math.round(30 + (11 - 30) * t)}, ${Math.round(20 + (6 - 20) * t)})`;
-
         glowColor = "rgba(212, 163, 115, 0.85)";
-
       } else {
-
         fillColor = "#2c1810";
-
         creviceColor = "#150b06";
-
         glowColor = "rgba(212, 163, 115, 0.9)";
-
       }
-
 
       if (beanBody) beanBody.setAttribute("fill", fillColor);
-
       if (beanCrevice) beanCrevice.setAttribute("stroke", creviceColor);
-
       bean.style.filter = `drop-shadow(0 0 12px ${glowColor})`;
 
-
-      // 4. Bean Particle Visibly Dropping *INTO* the Stage 05 Cup at 100% completion
-
-      if (animProgress >= 0.85) {
-
-        const dropT = (animProgress - 0.85) / 0.15; // 0 to 1
-
-        const beanScale = Math.max(0.18, 1.12 - dropT * 0.90);
-
-        const beanOpacity = Math.max(0, 1 - dropT * 1.35);
-
+      // 4. Bean Particle Visibly Dropping *INTO* the Stage 05 Cup at terminal endpoint
+      if (animProgress >= 0.88) {
+        const dropT = (animProgress - 0.88) / 0.12; // 0 to 1
+        const beanScale = Math.max(0.12, 1.12 - dropT * 0.95);
+        const beanOpacity = Math.max(0, 1 - dropT * 1.25);
         bean.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(${beanScale})`;
-
         bean.style.opacity = beanOpacity.toString();
 
-
         // Crema Ripple inside Stage 05 Cup
-
         if (cupLandingRipple) {
-
-          cupLandingRipple.style.opacity = (Math.sin(dropT * Math.PI) * 0.95).toFixed(3);
-
-          cupLandingRipple.style.transform = `scale(${0.5 + dropT * 2.8})`;
-
+          const rippleOpacity = Math.sin(dropT * Math.PI);
+          cupLandingRipple.style.opacity = rippleOpacity.toFixed(3);
+          cupLandingRipple.style.transform = `scale(${0.4 + dropT * 2.6})`;
         }
-
       } else {
-
         bean.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(1.12)`;
-
         bean.style.opacity = "1";
-
         if (cupLandingRipple) {
-
           cupLandingRipple.style.opacity = "0";
-
-          cupLandingRipple.style.transform = "scale(0.5)";
-
+          cupLandingRipple.style.transform = "scale(0.4)";
         }
-
       }
 
-
-      // 5. Milestone Icons (Sprout: ~0.18, Cherries: ~0.36, Roast: ~0.54, Grind: ~0.70)
-
-      const iconMilestones = [0.18, 0.36, 0.54, 0.70];
-
+      // 5. Milestone Icons (Sprout: ~0.20, Cherries: ~0.38, Roast: ~0.54, Grind: ~0.70)
+      const iconMilestones = [0.20, 0.38, 0.54, 0.70];
       trackIcons.forEach((icon, i) => {
-
         if (i < iconMilestones.length) {
-
           const targetP = iconMilestones[i];
-
           const dist = Math.abs(animProgress - targetP);
-
           if (dist < 0.08) {
-
             const ratio = 1 - dist / 0.08;
-
             icon.style.opacity = (ratio * 1).toFixed(3);
-
             icon.style.transform = `translate(-50%, -50%) scale(${0.85 + 0.33 * ratio})`;
-
             icon.classList.add("active-icon");
-
           } else {
-
             icon.style.opacity = "0";
-
             icon.style.transform = "translate(-50%, -50%) scale(0.85)";
-
             icon.classList.remove("active-icon");
-
           }
-
         }
-
       });
-
 
       // 6. Active Stage Cards:
-
-      // Stage 0 (Sprout): 0.00 -> 0.20
-
-      // Stage 1 (Cherries): 0.20 -> 0.40
-
-      // Stage 2 (Roast): 0.40 -> 0.60
-
-      // Stage 3 (Grind): 0.60 -> 0.78
-
+      // Stage 0 (Sprout): 0.00 -> 0.18
+      // Stage 1 (Cherries): 0.18 -> 0.38
+      // Stage 2 (Roast): 0.38 -> 0.58
+      // Stage 3 (Grind): 0.58 -> 0.78
       // Stage 4 (Stage 05 Cup): 0.78 -> 1.00 (stays active & visible through section exit!)
-
       let activeIndex = 0;
-
       if (animProgress >= 0.78) {
-
         activeIndex = 4; // Stage 05: The Perfect Sip
-
-      } else if (animProgress >= 0.60) {
-
+      } else if (animProgress >= 0.58) {
         activeIndex = 3; // Stage 04: Precision Grind
-
-      } else if (animProgress >= 0.40) {
-
+      } else if (animProgress >= 0.38) {
         activeIndex = 2; // Stage 03: Artisanal Roast
-
-      } else if (animProgress >= 0.20) {
-
+      } else if (animProgress >= 0.18) {
         activeIndex = 1; // Stage 02: Cherry Ripening
-
       } else {
-
         activeIndex = 0; // Stage 01: The Soil & Sprout
-
       }
-
 
       stageCards.forEach((card, idx) => {
-
         if (idx === activeIndex) {
-
           card.classList.add("active");
-
           card.style.opacity = "1";
-
           card.style.transform = "translateY(0) scale(1)";
-
           card.style.pointerEvents = "auto";
-
         } else {
-
           card.classList.remove("active");
-
           card.style.opacity = "0";
-
           card.style.transform = "translateY(24px) scale(0.96)";
-
           card.style.pointerEvents = "none";
-
         }
-
       });
 
-
       // 7. Background Color & Atmospheric Veil Transition (Smooth blend into Little Farmer)
-
-      // Triggers ONLY AFTER the bean/particle has fully landed in the cup (progress > 0.80)
-
-      if (progress > 0.80) {
-
-        const blendFactor = Math.min(1, (progress - 0.80) / 0.20);
-
+      // Triggers ONLY AFTER the bean/particle has fully landed in the cup (progress > 0.82)
+      if (progress > 0.82) {
+        const blendFactor = Math.min(1, (progress - 0.82) / 0.18);
         const r = Math.round(28 + (27 - 28) * blendFactor);
-
         const g = Math.round(20 + (39 - 20) * blendFactor);
-
         const b = Math.round(16 + (29 - 16) * blendFactor);
-
         section.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-
         section.style.setProperty("--sts-veil-opacity", blendFactor.toFixed(3));
-
       } else {
-
         section.style.backgroundColor = "#1c1410";
-
         section.style.setProperty("--sts-veil-opacity", "0");
-
       }
-
     }
-
   });
-
 
   window.addEventListener("resize", () => {
-
     buildPath();
-
     ScrollTrigger.refresh();
-
   });
 
+  ScrollTrigger.addEventListener("refresh", buildPath);
 }
 
 
